@@ -38,16 +38,14 @@ class PricingControllerTest {
     @Test
     void getPriceTest() throws Exception {
         mvc.perform(
-                get(url + "/prices/{0}",1)
-                .accept(MediaType.APPLICATION_JSON))
+                get(url + "/prices/{0}",1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
     void getAllPricesTest() throws Exception {
-        mvc.perform(get(url + "/prices")
-                .accept(MediaType.APPLICATION_JSON))
+        mvc.perform(get(url + "/prices"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
