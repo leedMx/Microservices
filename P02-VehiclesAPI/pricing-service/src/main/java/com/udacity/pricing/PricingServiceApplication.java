@@ -10,7 +10,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * Creates a Spring Boot Application to run the Pricing Service.
- * TODO: Convert the application from a REST API to a microservice.
  */
 @SpringBootApplication
 public class PricingServiceApplication {
