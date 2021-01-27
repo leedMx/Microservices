@@ -44,6 +44,7 @@ public class CarService {
         Car car = repository.findById(id)
                 .orElseThrow(CarNotFoundException::new);
         car.setPrice(prices.getPrice(id));
+        car.setLocation(maps.getAddress(car.getLocation()));
         return car;
     }
 
