@@ -6,9 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -73,6 +71,7 @@ public class CarControllerTest {
         given(carService.save(any())).willReturn(car);
         given(carService.findById(any())).willReturn(car);
         given(carService.list()).willReturn(Collections.singletonList(car));
+        given(carService.update(any())).willReturn(car);
     }
 
     /**
@@ -134,6 +133,16 @@ public class CarControllerTest {
     public void deleteCar() throws Exception {
         mvc.perform(delete("/cars/{0}",1L))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void updateCar() throws Exception {
+        Car car = getCar();
+        car.setId(1L);
+        mvc.perform(put("/cars/{0}",1L)
+                .content(mapper.writeValueAsString(car))
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
     }
 
     /**

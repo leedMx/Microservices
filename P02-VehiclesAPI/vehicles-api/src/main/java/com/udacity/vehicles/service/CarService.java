@@ -7,7 +7,6 @@ import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
 import java.util.List;
 
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 /**
@@ -44,12 +43,7 @@ public class CarService {
     public Car findById(Long id) {
         Car car = repository.findById(id)
                 .orElseThrow(CarNotFoundException::new);
-
         car.setPrice(prices.getPrice(id));
-
-        Location address = maps.getAddress(car.getLocation());
-        car.setLocation(address);
-
         return car;
     }
 
@@ -60,15 +54,30 @@ public class CarService {
      */
     public Car save(Car car) {
         if (car.getId() != null) {
-            return repository.findById(car.getId())
-                    .map(carToBeUpdated -> {
-                        carToBeUpdated.setDetails(car.getDetails());
-                        carToBeUpdated.setLocation(car.getLocation());
-                        return repository.save(carToBeUpdated);
-                    }).orElseThrow(CarNotFoundException::new);
+            return update(car);
         }
+        car.setCreatedAt(null);
+        car.setModifiedAt(null);
+        car.setLocation(maps.getAddress(car.getLocation()));
+        repository.saveAndFlush(car);
+        car.setPrice(prices.getPrice(car.getId()));
+        return repository.saveAndFlush(car);
+    }
 
-        return repository.save(car);
+    /**
+     * Updates a vehicle, based on prior existence of car
+     * @param car An existing car object
+     * @return the updated car as stored in the repository
+     * @Throws CarNotFoundException if the given id does not exist
+     */
+    public Car update(Car car) {
+        Long id = car.getId();
+        Car oldCar = repository.findById(id).orElseThrow(CarNotFoundException::new);
+        car.setCreatedAt(oldCar.getCreatedAt());
+        car.setModifiedAt(null);
+        car.setPrice(prices.getPrice(id));
+        car.setLocation(maps.getAddress(car.getLocation()));
+        return repository.saveAndFlush(car);
     }
 
     /**

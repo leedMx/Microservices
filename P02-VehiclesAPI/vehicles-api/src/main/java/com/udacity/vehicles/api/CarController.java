@@ -82,7 +82,7 @@ class CarController {
     @PutMapping("/{id}")
     ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) {
         car.setId(id);
-        Resource<Car> resource = assembler.toResource(carService.save(car));
+        Resource<Car> resource = assembler.toResource(carService.update(car));
         return ResponseEntity.ok(resource);
     }
 
