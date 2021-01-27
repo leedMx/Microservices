@@ -1,4 +1,4 @@
-package com.udacity.pricing.entity;
+package com.udacity.pricing;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.AllArgsConstructor;

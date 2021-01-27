@@ -1,7 +1,7 @@
 package com.udacity.pricing.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.udacity.pricing.entity.Price;
+import com.udacity.pricing.Price;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
