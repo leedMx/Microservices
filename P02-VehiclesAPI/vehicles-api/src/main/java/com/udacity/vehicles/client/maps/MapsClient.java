@@ -1,7 +1,9 @@
 package com.udacity.vehicles.client.maps;
 
 import com.udacity.vehicles.domain.Location;
+
 import java.util.Objects;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,18 +22,20 @@ public class MapsClient {
     private final ModelMapper mapper;
 
     public MapsClient(WebClient maps,
-            ModelMapper mapper) {
+                      ModelMapper mapper) {
         this.client = maps;
         this.mapper = mapper;
     }
 
     /**
      * Gets an address from the Maps client, given latitude and longitude.
+     *
      * @param location An object containing "lat" and "lon" of location
      * @return An updated location including street, city, state and zip,
-     *   or an exception message noting the Maps service is down
+     * or an exception message noting the Maps service is down
      */
     public Location getAddress(Location location) {
+        log.info("Querying address for: " + location);
         try {
             Address address = client
                     .get()
@@ -42,7 +46,7 @@ public class MapsClient {
                             .build()
                     )
                     .retrieve().bodyToMono(Address.class).block();
-
+            log.info("Obtained: " + address);
             mapper.map(Objects.requireNonNull(address), location);
 
             return location;

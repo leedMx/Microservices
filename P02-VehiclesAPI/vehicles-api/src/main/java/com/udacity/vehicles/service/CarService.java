@@ -77,7 +77,8 @@ public class CarService {
         car.setModifiedAt(null);
         car.setPrice(prices.getPrice(id));
         car.setLocation(maps.getAddress(car.getLocation()));
-        return repository.saveAndFlush(car);
+        repository.saveAndFlush(car);
+        return car;
     }
 
     /**
