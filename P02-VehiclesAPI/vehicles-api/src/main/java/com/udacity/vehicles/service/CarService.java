@@ -45,8 +45,7 @@ public class CarService {
         Car car = repository.findById(id)
                 .orElseThrow(CarNotFoundException::new);
 
-        String price = prices.getPrice(id);
-        car.setPrice(price);
+        car.setPrice(prices.getPrice(id));
 
         Location address = maps.getAddress(car.getLocation());
         car.setLocation(address);

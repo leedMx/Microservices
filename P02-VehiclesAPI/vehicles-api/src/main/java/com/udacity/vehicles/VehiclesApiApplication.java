@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -62,14 +63,9 @@ public class VehiclesApiApplication {
         return WebClient.create(endpoint);
     }
 
-    /**
-     * Web Client for the pricing API
-     * @param endpoint where to communicate for the pricing API
-     * @return created pricing endpoint
-     */
-    @Bean(name="pricing")
-    public WebClient webClientPricing(@Value("${pricing.endpoint}") String endpoint) {
-        return WebClient.create(endpoint);
+    @Bean
+    public RestTemplate pricingTemplate(){
+        return new RestTemplate();
     }
 
     @Bean

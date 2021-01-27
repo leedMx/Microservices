@@ -1,5 +1,6 @@
 package com.udacity.vehicles.domain.car;
 
+import com.udacity.vehicles.client.prices.Price;
 import com.udacity.vehicles.domain.Condition;
 import com.udacity.vehicles.domain.Location;
 import java.time.LocalDateTime;
@@ -51,6 +52,6 @@ public class Car {
     private Location location = new Location(0d, 0d);
 
     @Transient
-    private String price;
+    private Price price;
 
 }
